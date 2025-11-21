@@ -10,7 +10,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "firebase": "^11.6.0",
+    "firebase": "^11.10.0",
+    "lodash": "^4.17.21",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
     "vue": "^3.4.19"
