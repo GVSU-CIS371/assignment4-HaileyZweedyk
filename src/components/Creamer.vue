@@ -10,6 +10,25 @@
 
 <script setup lang="ts">
 import { useBeverageStore } from "../stores/beverageStore";
+import {
+  DocumentReference,
+  setDoc,
+  doc,
+  collection,
+  addDoc,
+} from 'firebase/firestore';
+import db from '../firebase.ts';
+
+const creamerCollection = [
+  { "id": "c1", "name": "No Cream", "color": "transparent" },
+  { "id": "c2", "name": "Milk", "color": "AliceBlue" },
+  { "id": "c3", "name": "Cream", "color": "#F5F5DC" },
+  { "id": "c4", "name": "Half & Half", "color": "#FFFACD" }
+]
+creamerCollection.forEach(async (creamer: any) => {
+  const creamerDoc: DocumentReference = doc(db, 'creamers', creamer.id);
+  await setDoc(creamerDoc, { name: creamer.name, color: creamer.color });
+});
 
 const beverageStore = useBeverageStore();
 </script>

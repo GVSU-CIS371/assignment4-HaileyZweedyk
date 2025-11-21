@@ -7,6 +7,24 @@
 
 <script setup lang="ts">
 import { useBeverageStore } from "../stores/beverageStore";
+import {
+  DocumentReference,
+  setDoc,
+  doc,
+  collection,
+  addDoc,
+} from 'firebase/firestore';
+import db from '../firebase.ts';
+
+const baseCollection = [
+  { "id": "b1", "name": "Black Tea", "color": "#8B4513" },
+  { "id": "b2", "name": "Green Tea", "color": "#C8E6C9" },
+  { "id": "b3", "name": "Coffee", "color": "#6F4E37" }
+];
+baseCollection.forEach(async (base: any) => {
+  const baseDoc: DocumentReference = doc(db, 'bases', base.id);
+  await setDoc(baseDoc, { name: base.name, color: base.color });
+});
 
 const beverageStore = useBeverageStore();
 </script>

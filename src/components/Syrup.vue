@@ -7,11 +7,30 @@
 
 <script setup lang="ts">
 import { useBeverageStore } from "../stores/beverageStore";
+import {
+  DocumentReference,
+  setDoc,
+  doc,
+  collection,
+  addDoc,
+} from 'firebase/firestore';
+import db from '../firebase.ts';
+
+const syrupCollection = [
+  { "id": "s1", "name": "No Syrup", "color": "transparent" },
+  { "id": "s2", "name": "Vanilla", "color": "#FFEFD5" },
+  { "id": "s3", "name": "Caramel", "color": "#DAA520" },
+  { "id": "s4", "name": "Hazelnut", "color": "#6B4423" }
+]
+syrupCollection.forEach(async (syrup: any) => {
+  const syrupDoc: DocumentReference = doc(db, 'syrups', syrup.id);
+  await setDoc(syrupDoc, { name: syrup.name, color: syrup.color });
+});
 
 const beverageStore = useBeverageStore();
 </script>
 <style lang="scss" scoped>
-.syrup {
+.syrup { 
   transform: translateY(400%);
   position: relative;
   width: 100%;
