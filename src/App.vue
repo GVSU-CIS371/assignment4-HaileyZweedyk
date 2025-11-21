@@ -97,7 +97,6 @@ import {
   addDoc,
   getDocs,
 } from 'firebase/firestore';
-import { onMounted } from 'vue';
 
 const beverageStore = useBeverageStore();
 
