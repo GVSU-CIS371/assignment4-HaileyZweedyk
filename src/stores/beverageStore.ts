@@ -22,36 +22,47 @@ export const useBeverageStore = defineStore("BeverageStore", {
   state: () => ({
     temps: tempretures,
     currentTemp: tempretures[0],
+
     bases: [] as BaseBeverageType[],
-    currentBase: null as BaseBeverageType | null,
+    currentBaseId: "" as string,  // store ID instead of object
+
     syrups: [] as SyrupType[],
-    currentSyrup: null as SyrupType | null,
+    currentSyrupId: "" as string,
+
     creamers: [] as CreamerType[],
-    currentCreamer: null as CreamerType | null,
+    currentCreamerId: "" as string,
+
     beverages: [] as BeverageType[],
-    currentBeverage: null as BeverageType | null,
+    currentBeverageId: "", // ID of the selected saved beverage
     currentName: "",
   }),
 
   actions: {
     async init() {
       // Load bases
-      const basesSnap = await getDocs(collection(db, 'bases'));
+      const basesSnap = await getDocs(collection(db, "bases"));
       this.bases = basesSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any;
+      this.currentBaseId = this.bases[0]?.id || "";
 
       // Load creamers
-      const creamersSnap = await getDocs(collection(db, 'creamers'));
+      const creamersSnap = await getDocs(collection(db, "creamers"));
       this.creamers = creamersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any;
+      this.currentCreamerId = this.creamers[0]?.id || "";
 
       // Load syrups
-      const syrupsSnap = await getDocs(collection(db, 'syrups'));
+      const syrupsSnap = await getDocs(collection(db, "syrups"));
       this.syrups = syrupsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any;
+      this.currentSyrupId = this.syrups[0]?.id || "";
 
-      // Set default selections
-      this.currentBase = this.bases[0] || null;
-      this.currentCreamer = this.creamers[0] || null;
-      this.currentSyrup = this.syrups[0] || null;
+      await this.loadBeverages();
     },
+
+     async loadBeverages() {
+      const snap = await getDocs(collection(db, "beverages"));
+      this.beverages = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as BeverageType[];
+      this.currentBeverageId = this.beverages[0]?.id || "";
+    },
+
     makeBeverage() {},
 
     showBeverage() {},

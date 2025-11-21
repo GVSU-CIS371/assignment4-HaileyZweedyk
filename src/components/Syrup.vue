@@ -17,6 +17,8 @@ import {
 import db from '../firebase.ts';
 import { onMounted } from 'vue';
 
+const beverageStore = useBeverageStore();
+
 const syrupCollection = [
   { "id": "s1", "name": "No Syrup", "color": "transparent" },
   { "id": "s2", "name": "Vanilla", "color": "#FFEFD5" },
@@ -31,7 +33,7 @@ onMounted(async () => {
   }
 });
 
-const beverageStore = useBeverageStore();
+
 </script>
 <style lang="scss" scoped>
 .syrup { 

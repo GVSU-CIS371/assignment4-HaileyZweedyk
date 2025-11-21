@@ -20,6 +20,8 @@ import {
 import db from '../firebase.ts';
 import { onMounted } from 'vue';
 
+const beverageStore = useBeverageStore();
+
 const creamerCollection = [
   { "id": "c1", "name": "No Cream", "color": "transparent" },
   { "id": "c2", "name": "Milk", "color": "AliceBlue" },
@@ -33,8 +35,6 @@ onMounted(async () => {
     await setDoc(creamerDoc, { name: creamer.name, color: creamer.color });
   }
 });
-
-const beverageStore = useBeverageStore();
 </script>
 <style lang="scss" scoped>
 .froth {

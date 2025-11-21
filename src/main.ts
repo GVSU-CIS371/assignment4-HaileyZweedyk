@@ -3,12 +3,18 @@ import "./styles/mug.scss";
 import { createPinia } from "pinia";
 import piniaPluginPersistedState from "pinia-plugin-persistedstate";
 import App from "./App.vue";
+import { useBeverageStore } from "./stores/beverageStore";
+
+// 1️⃣ Create the Vue app
+const app = createApp(App);
+
+// 2️⃣ Create Pinia and use plugins
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
-import { useBeverageStore } from "./stores/beverageStore";
+app.use(pinia);
 
 const beverageStore = useBeverageStore();
 
 beverageStore.init().then(() => {
-  createApp(App).use(pinia).mount("#app");
+  app.mount("#app");
 });
