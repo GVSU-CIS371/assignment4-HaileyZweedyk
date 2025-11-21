@@ -18,6 +18,7 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import db from '../firebase.ts';
+import { onMounted } from 'vue';
 
 const creamerCollection = [
   { "id": "c1", "name": "No Cream", "color": "transparent" },
@@ -25,9 +26,12 @@ const creamerCollection = [
   { "id": "c3", "name": "Cream", "color": "#F5F5DC" },
   { "id": "c4", "name": "Half & Half", "color": "#FFFACD" }
 ]
-creamerCollection.forEach(async (creamer: any) => {
-  const creamerDoc: DocumentReference = doc(db, 'creamers', creamer.id);
-  await setDoc(creamerDoc, { name: creamer.name, color: creamer.color });
+
+onMounted(async () => {
+  for (const creamer of creamerCollection) {
+    const creamerDoc: DocumentReference = doc(db, 'creamers', creamer.id);
+    await setDoc(creamerDoc, { name: creamer.name, color: creamer.color });
+  }
 });
 
 const beverageStore = useBeverageStore();
